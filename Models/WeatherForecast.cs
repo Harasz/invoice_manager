@@ -1,6 +1,6 @@
 using System;
 
-namespace invoice_manager
+namespace invoice_manager.Models
 {
     public class WeatherForecast
     {

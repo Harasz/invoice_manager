@@ -72,6 +72,7 @@ namespace invoice_manager.DBContexts
             modelBuilder.Entity<User>().Property(u => u.LastName).HasColumnType("varchar(40)").HasMaxLength(40).IsRequired();
             modelBuilder.Entity<User>().Property(u => u.Email).HasColumnType("varchar(100)").HasMaxLength(100).IsRequired();
             modelBuilder.Entity<User>().Property(u => u.PasswordHash).HasColumnType("char(60)").HasMaxLength(60).IsRequired();
+            modelBuilder.Entity<User>().Property(u => u.Role).HasConversion<string>().HasDefaultValue(UserRoles.User).IsRequired();
             modelBuilder.Entity<User>().Property(u => u.CreatedAt).HasColumnType("datetime").HasDefaultValue(DateTime.Now).IsRequired();
             modelBuilder.Entity<User>().Property(u => u.UpdatedAt).HasColumnType("datetime").HasDefaultValue(DateTime.Now).IsRequired();
             

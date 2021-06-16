@@ -6,6 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore; 
 using invoice_manager.DBContexts;
+using invoice_manager.Services;
 
 namespace invoice_manager
 {
@@ -29,6 +30,8 @@ namespace invoice_manager
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "Invoice manager", Version = "v1"});
             });
+
+            services.AddScoped<TaxService, TaxService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

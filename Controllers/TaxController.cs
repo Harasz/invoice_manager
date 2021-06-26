@@ -22,13 +22,17 @@ namespace invoice_manager.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Dtos.GetTax>>> GetTaxes()
         {
-            return Json(_taxService.ToDto(await _taxService.GetAll()));
+            return Json(TaxService.ToDto(await _taxService.GetAll()));
         }
         
         [HttpGet("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Dtos.GetTax))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<Dtos.GetTax>> GetTax(int id)
         {
-            return Json(_taxService.ToDto(await _taxService.GetById(id)));
+            var tax = await _taxService.GetById(id);
+            if (tax is null) return NotFound();
+            return Json(tax);
         }
         
         [HttpPost]
@@ -46,7 +50,7 @@ namespace invoice_manager.Controllers
                 return Conflict();
             }
 
-            return CreatedAtAction(nameof(GetTax), new { id = result.Entity.Id }, _taxService.ToDto(result.Entity));
+            return CreatedAtAction(nameof(GetTax), new { id = result.Entity.Id }, TaxService.ToDto(result.Entity));
         }
         
         [HttpDelete("{id:int}")]

@@ -19,12 +19,12 @@ namespace invoice_manager.Services
             _dbContext = dbContext;
         }
 
-        public List<GetTax> ToDto(List<Tax> taxes)
+        public static List<GetTax> ToDto(IEnumerable<Tax> taxes)
         {
             return taxes.Select(ToDto).ToList();
         }
         
-        public GetTax ToDto(Tax tax)
+        public static GetTax ToDto(Tax tax)
         {
             return new() {Id = tax.Id, Multiplier = tax.Multiplier};
         }

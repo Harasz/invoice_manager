@@ -30,8 +30,14 @@ namespace invoice_manager
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "Invoice manager", Version = "v1"});
             });
+            
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
 
             services.AddScoped<TaxService, TaxService>();
+            services.AddScoped<ProductService, ProductService>();
+            services.AddScoped<CompanyService, CompanyService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

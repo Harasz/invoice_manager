@@ -63,6 +63,22 @@ namespace invoice_manager.Controllers
             return CreatedAtAction(nameof(GetProduct), new { id = result.Entity.Id }, result.Entity);
         }
         
+        [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(GetProduct))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<GetProduct>> EditProduct(int id, PutProduct putProduct)
+        {
+            if (putProduct is null) return BadRequest(new ArgumentNullException());
+
+            var result = await _productService.Edit(id, putProduct);
+            
+            if (result is null) return NotFound();
+
+            return CreatedAtAction(nameof(Dtos.GetProduct), new {id},
+                ProductService.ToDto(result));
+        }
+        
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]

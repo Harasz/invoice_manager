@@ -6,12 +6,13 @@ using invoice_manager.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Extensions;
 
 namespace invoice_manager.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
         private readonly UserService _userService;

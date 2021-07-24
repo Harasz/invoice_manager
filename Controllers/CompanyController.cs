@@ -77,6 +77,22 @@ namespace invoice_manager.Controllers
 
             return CreatedAtAction(nameof(GetCompany), new {id = result.Entity.Id}, CompanyService.ToDto(result.Entity));
         }
+        
+        [HttpPut("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(GetCompany))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<GetClient>> EditCompany(int id, PutCompany putCompany)
+        {
+            if (putCompany is null) return BadRequest(new ArgumentNullException());
+
+            var result = await _companyService.Edit(id, putCompany);
+            
+            if (result is null) return NotFound();
+
+            return CreatedAtAction(nameof(Dtos.GetCompany), new {id},
+                CompanyService.ToDto(result));
+        }
 
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

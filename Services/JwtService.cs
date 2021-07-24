@@ -25,6 +25,7 @@ namespace invoice_manager.Services
             var claims = new[] {    
                 new Claim(JwtRegisteredClaimNames.Sub, user.LastName),    
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
+                new Claim(ClaimTypes.Role, user.Role.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())    
             };    
             

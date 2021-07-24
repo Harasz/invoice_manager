@@ -83,11 +83,11 @@ namespace invoice_manager.Services
             await _dbContext.SaveChangesAsync();
             return await GetById(id);
         }
-        
-        public static bool IsValid(Client client)
+
+        private static bool IsValid(Client client)
         {
-            List<ValidationResult> results = new List<ValidationResult>();
-            ValidationContext context = new ValidationContext(client, null, null);
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(client, null, null);
             return Validator.TryValidateObject(client, context, results, true);
         }
     }

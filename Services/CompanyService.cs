@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using invoice_manager.DBContexts;
+using invoice_manager.Dtos;
 using invoice_manager.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -69,6 +70,17 @@ namespace invoice_manager.Services
             _dbContext.Companies.Remove(company);
             await _dbContext.SaveChangesAsync();
             return true;
+        }
+        
+        public async Task<Company> Edit(int id, PutCompany newValues)
+        {
+            var company = await GetById(id);
+
+            if (company is null) return null;
+
+            _dbContext.Entry(company).CurrentValues.SetValues(newValues);
+            await _dbContext.SaveChangesAsync();
+            return await GetById(id);
         }
     }
 }

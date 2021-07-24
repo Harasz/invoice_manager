@@ -4,7 +4,7 @@ using invoice_manager.Utils.Validators;
 
 namespace invoice_manager.Dtos
 {
-    public class PutCompany
+    public class PutClient
     {
         [Required]
         [StringLength(100)]
@@ -28,18 +28,5 @@ namespace invoice_manager.Dtos
         [StringLength(28)]
         [IBAN]
         public string? IBAN { get; set;}
-        [Required]
-        [StringLength(9)]
-        [PhoneNumber]
-        public string? PhoneNumber { get; set;}
-        [Required]
-        [StringLength(100)]
-        [Email]
-        public string? Email { get; set;}
-        [Required]
-        [StringLength(100)]
-        [Url]
-        public string? Website { get; set;}
-        public string? LogoSourcePath { get; set;}
     }
 }

@@ -10,8 +10,8 @@ using invoice_manager.DBContexts;
 namespace invoice_manager.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20210613122645_Init")]
-    partial class Init
+    [Migration("20210721171434_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -44,7 +44,7 @@ namespace invoice_manager.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2021, 6, 13, 14, 26, 45, 226, DateTimeKind.Local).AddTicks(497));
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("IBAN")
                         .HasMaxLength(28)
@@ -71,14 +71,16 @@ namespace invoice_manager.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2021, 6, 13, 14, 26, 45, 226, DateTimeKind.Local).AddTicks(1049));
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.HasKey("Id")
                         .HasName("PK_Clients");
 
-                    b.HasAlternateKey("Name");
+                    b.HasIndex("Name")
+                        .IsUnique();
 
-                    b.HasAlternateKey("TaxNumber");
+                    b.HasIndex("TaxNumber")
+                        .IsUnique();
 
                     b.ToTable("Clients");
                 });
@@ -107,7 +109,7 @@ namespace invoice_manager.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2021, 6, 13, 14, 26, 45, 226, DateTimeKind.Local).AddTicks(4615));
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("Email")
                         .HasMaxLength(100)
@@ -148,7 +150,7 @@ namespace invoice_manager.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2021, 6, 13, 14, 26, 45, 226, DateTimeKind.Local).AddTicks(5093));
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("Website")
                         .HasMaxLength(100)
@@ -157,9 +159,11 @@ namespace invoice_manager.Migrations
                     b.HasKey("Id")
                         .HasName("PK_Companies");
 
-                    b.HasAlternateKey("Name");
+                    b.HasIndex("Name")
+                        .IsUnique();
 
-                    b.HasAlternateKey("TaxNumber");
+                    b.HasIndex("TaxNumber")
+                        .IsUnique();
 
                     b.ToTable("Companies");
                 });
@@ -177,13 +181,15 @@ namespace invoice_manager.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2021, 6, 13, 14, 26, 45, 229, DateTimeKind.Local).AddTicks(3758));
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<DateTime>("DateDue")
                         .HasColumnType("datetime");
 
                     b.Property<DateTime>("IssuedAt")
-                        .HasColumnType("datetime");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<int>("IssuedById")
                         .HasColumnType("int");
@@ -192,7 +198,7 @@ namespace invoice_manager.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<DateTime>("PaidAt")
+                    b.Property<DateTime?>("PaidAt")
                         .HasColumnType("datetime");
 
                     b.Property<string>("PaymentMethod")
@@ -206,7 +212,7 @@ namespace invoice_manager.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2021, 6, 13, 14, 26, 45, 229, DateTimeKind.Local).AddTicks(4291));
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.HasKey("Id")
                         .HasName("PK_Invoices");
@@ -228,7 +234,7 @@ namespace invoice_manager.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2021, 6, 13, 14, 26, 45, 227, DateTimeKind.Local).AddTicks(7000));
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -253,7 +259,7 @@ namespace invoice_manager.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2021, 6, 13, 14, 26, 45, 227, DateTimeKind.Local).AddTicks(7997));
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.HasKey("Id")
                         .HasName("PK_Products");
@@ -278,7 +284,7 @@ namespace invoice_manager.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2021, 6, 13, 14, 26, 45, 228, DateTimeKind.Local).AddTicks(583));
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<int>("InvoiceId")
                         .HasColumnType("int");
@@ -290,7 +296,7 @@ namespace invoice_manager.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2021, 6, 13, 14, 26, 45, 228, DateTimeKind.Local).AddTicks(1062));
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.HasKey("Id")
                         .HasName("PK_ProductsLists");
@@ -312,7 +318,7 @@ namespace invoice_manager.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2021, 6, 13, 14, 26, 45, 227, DateTimeKind.Local).AddTicks(3303));
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<float>("Multiplier")
                         .HasPrecision(2)
@@ -321,12 +327,13 @@ namespace invoice_manager.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2021, 6, 13, 14, 26, 45, 227, DateTimeKind.Local).AddTicks(3769));
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.HasKey("Id")
                         .HasName("PK_Taxes");
 
-                    b.HasAlternateKey("Multiplier");
+                    b.HasIndex("Multiplier")
+                        .IsUnique();
 
                     b.ToTable("Taxes");
 
@@ -371,7 +378,7 @@ namespace invoice_manager.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2021, 6, 13, 14, 26, 45, 219, DateTimeKind.Local).AddTicks(6762));
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -393,15 +400,22 @@ namespace invoice_manager.Migrations
                         .HasMaxLength(60)
                         .HasColumnType("char(60)");
 
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("varchar(5)")
+                        .HasDefaultValue("User");
+
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime")
-                        .HasDefaultValue(new DateTime(2021, 6, 13, 14, 26, 45, 225, DateTimeKind.Local).AddTicks(4255));
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.HasKey("Id")
                         .HasName("PK_Users");
 
-                    b.HasAlternateKey("Email");
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Users");
 
@@ -414,6 +428,7 @@ namespace invoice_manager.Migrations
                             FirstName = "Admin",
                             LastName = "System",
                             PasswordHash = "0xc",
+                            Role = "Admin",
                             UpdatedAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });

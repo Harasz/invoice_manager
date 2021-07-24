@@ -25,7 +25,7 @@ namespace invoice_manager.Services
                 Name = product.Name,
                 Unit = product.Unit,
                 PricePerUnit = product.PricePerUnit,
-                Tax = product.Tax,
+                Tax = TaxService.ToDto(product.Tax),
                 OwnerId = product.OwnerId,
                 CreatedAt = product.CreatedAt,
                 UpdatedAt = product.UpdatedAt,
@@ -44,7 +44,7 @@ namespace invoice_manager.Services
         
         public async Task<Product> GetById(int id)
         {
-            return await _dbContext.Products.FindAsync(id);
+            return await _dbContext.Products.Include(product => product.Tax).FirstAsync(product => product.Id == id);
         }
         
         public async Task<List<Product>> GetByCompanyId(int companyId)
@@ -68,6 +68,12 @@ namespace invoice_manager.Services
             _dbContext.Products.Remove(product);
             await _dbContext.SaveChangesAsync();
             return true;
+        }
+        
+        public async Task<int> GetOwnerId(int id)
+        {
+            var product = await GetById(id);
+            return product.OwnerId;
         }
     }
 }

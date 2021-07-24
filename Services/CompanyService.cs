@@ -53,9 +53,9 @@ namespace invoice_manager.Services
             return await _dbContext.Companies.FindAsync(id);
         }
 
-        public async Task<EntityEntry<Company>> Create(Company tax)
+        public async Task<EntityEntry<Company>> Create(Company company)
         {
-            var result = await _dbContext.Companies.AddAsync(tax);
+            var result = await _dbContext.Companies.AddAsync(company);
             await _dbContext.SaveChangesAsync();
             return result;
         }

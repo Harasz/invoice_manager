@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using invoice_manager.Dtos;
 using invoice_manager.Models;
 using invoice_manager.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +12,7 @@ namespace invoice_manager.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class CompanyController : Controller
     {
         private readonly CompanyService _companyService;
@@ -24,7 +27,7 @@ namespace invoice_manager.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Dtos.GetCompany>>> GetCompanies()
         {
-            return Json(await _companyService.GetAll());
+            return Json(CompanyService.ToDto(await _companyService.GetAll()));
         }
 
         [HttpGet("{id:int}")]
@@ -48,7 +51,7 @@ namespace invoice_manager.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(Company))]
+        [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(GetCompany))]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<ActionResult<Dtos.GetCompany>> CreateCompany(Dtos.PutCompany putCompany)

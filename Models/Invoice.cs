@@ -29,7 +29,7 @@ namespace invoice_manager.Models
         public InvoiceType Type { get; set;}
         public PaymentMethod PaymentMethod { get; set;}
         public DateTime DateDue { get; set;}
-        public DateTime PaidAt { get; set;}
+        public DateTime? PaidAt { get; set;}
         public DateTime IssuedAt { get; set;}
         public User IssuedBy { get; set;}
         public int IssuedById { get; set;}

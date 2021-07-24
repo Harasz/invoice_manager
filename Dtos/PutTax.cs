@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace invoice_manager.Dtos
 {
     public class PutTax
     {
-        public float Multiplier { get; set;}
+        [Required]
+        public float? Multiplier { get; set;}
     }
 }

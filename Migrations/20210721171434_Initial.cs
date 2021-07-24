@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace invoice_manager.Migrations
 {
-    public partial class Init : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,14 +31,12 @@ namespace invoice_manager.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     IBAN = table.Column<string>(type: "char(28)", fixedLength: true, maxLength: 28, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2021, 6, 13, 14, 26, 45, 226, DateTimeKind.Local).AddTicks(497)),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2021, 6, 13, 14, 26, 45, 226, DateTimeKind.Local).AddTicks(1049))
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Clients", x => x.Id);
-                    table.UniqueConstraint("AK_Clients_Name", x => x.Name);
-                    table.UniqueConstraint("AK_Clients_TaxNumber", x => x.TaxNumber);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -70,14 +68,12 @@ namespace invoice_manager.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     LogoSourcePath = table.Column<string>(type: "char(20)", fixedLength: true, maxLength: 20, nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2021, 6, 13, 14, 26, 45, 226, DateTimeKind.Local).AddTicks(4615)),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2021, 6, 13, 14, 26, 45, 226, DateTimeKind.Local).AddTicks(5093))
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Companies", x => x.Id);
-                    table.UniqueConstraint("AK_Companies_Name", x => x.Name);
-                    table.UniqueConstraint("AK_Companies_TaxNumber", x => x.TaxNumber);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -88,13 +84,12 @@ namespace invoice_manager.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Multiplier = table.Column<float>(type: "float(2)", precision: 2, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2021, 6, 13, 14, 26, 45, 227, DateTimeKind.Local).AddTicks(3303)),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2021, 6, 13, 14, 26, 45, 227, DateTimeKind.Local).AddTicks(3769))
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Taxes", x => x.Id);
-                    table.UniqueConstraint("AK_Taxes_Multiplier", x => x.Multiplier);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -112,13 +107,14 @@ namespace invoice_manager.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     PasswordHash = table.Column<string>(type: "char(60)", maxLength: 60, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2021, 6, 13, 14, 26, 45, 219, DateTimeKind.Local).AddTicks(6762)),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2021, 6, 13, 14, 26, 45, 225, DateTimeKind.Local).AddTicks(4255))
+                    Role = table.Column<string>(type: "varchar(5)", nullable: false, defaultValue: "User")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                    table.UniqueConstraint("AK_Users_Email", x => x.Email);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -135,8 +131,8 @@ namespace invoice_manager.Migrations
                     PricePerUnit = table.Column<float>(type: "float(2)", precision: 2, nullable: false),
                     TaxId = table.Column<int>(type: "int", nullable: false),
                     OwnerId = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2021, 6, 13, 14, 26, 45, 227, DateTimeKind.Local).AddTicks(7000)),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2021, 6, 13, 14, 26, 45, 227, DateTimeKind.Local).AddTicks(7997))
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -169,12 +165,12 @@ namespace invoice_manager.Migrations
                     PaymentMethod = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     DateDue = table.Column<DateTime>(type: "datetime", nullable: false),
-                    PaidAt = table.Column<DateTime>(type: "datetime", nullable: false),
-                    IssuedAt = table.Column<DateTime>(type: "datetime", nullable: false),
+                    PaidAt = table.Column<DateTime>(type: "datetime", nullable: true),
+                    IssuedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
                     IssuedById = table.Column<int>(type: "int", nullable: false),
                     ClientId = table.Column<int>(type: "int", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2021, 6, 13, 14, 26, 45, 229, DateTimeKind.Local).AddTicks(3758)),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2021, 6, 13, 14, 26, 45, 229, DateTimeKind.Local).AddTicks(4291))
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -203,8 +199,8 @@ namespace invoice_manager.Migrations
                     Count = table.Column<int>(type: "int", nullable: false),
                     InvoiceId = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", precision: 2, nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2021, 6, 13, 14, 26, 45, 228, DateTimeKind.Local).AddTicks(583)),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValue: new DateTime(2021, 6, 13, 14, 26, 45, 228, DateTimeKind.Local).AddTicks(1062))
+                    CreatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime", nullable: false, defaultValueSql: "CURRENT_TIMESTAMP")
                 },
                 constraints: table =>
                 {
@@ -241,6 +237,30 @@ namespace invoice_manager.Migrations
                 values: new object[] { 1, "admin@domain.com", "Admin", "System", "0xc" });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Clients_Name",
+                table: "Clients",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Clients_TaxNumber",
+                table: "Clients",
+                column: "TaxNumber",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Companies_Name",
+                table: "Companies",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Companies_TaxNumber",
+                table: "Companies",
+                column: "TaxNumber",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Invoices_ClientId",
                 table: "Invoices",
                 column: "ClientId");
@@ -269,6 +289,18 @@ namespace invoice_manager.Migrations
                 name: "IX_ProductsLists_ProductId",
                 table: "ProductsLists",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Taxes_Multiplier",
+                table: "Taxes",
+                column: "Multiplier",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

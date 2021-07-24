@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using invoice_manager.Models;
 using invoice_manager.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,7 @@ namespace invoice_manager.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class TaxController : Controller
     {
         private readonly TaxService _taxService;
@@ -32,7 +34,7 @@ namespace invoice_manager.Controllers
         {
             var tax = await _taxService.GetById(id);
             if (tax is null) return NotFound();
-            return Json(tax);
+            return Json(TaxService.ToDto(tax));
         }
         
         [HttpPost]
@@ -42,8 +44,8 @@ namespace invoice_manager.Controllers
         public async Task<ActionResult<Tax>> CreateTax(Dtos.PutTax putTax)
         {
             if (putTax is null) return BadRequest(new ArgumentNullException());
-            
-            var result = await _taxService.Create(new Tax {Multiplier = putTax.Multiplier});
+
+            var result = await _taxService.Create(new Tax {Multiplier = putTax.Multiplier.Value});
 
             if (result is null)
             {

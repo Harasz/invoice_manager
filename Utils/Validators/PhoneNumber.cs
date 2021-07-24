@@ -1,10 +1,27 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace invoice_manager.Utils.Validators
 {
-    public class PhoneNumber : IValidator
+    public class PhoneNumber : ValidationAttribute
     {
-        public static bool IsValid(string phoneNumber)
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            return phoneNumber.Length == 9 && int.TryParse(phoneNumber, out _);
+            if (value is not string phoneNumber)
+            {
+                return new ValidationResult("Email must be a string type.");
+            }
+
+            if (phoneNumber.Length != 9)
+            {
+                return new ValidationResult("Phone number must be 9 length long.");
+            }
+
+            if (!int.TryParse(phoneNumber, out _))
+            {
+                return new ValidationResult("Phone number accept only digits.");
+            }
+            
+            return ValidationResult.Success;
         }
     }
 }

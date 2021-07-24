@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
+using invoice_manager.Models;
 
-namespace invoice_manager.Models
+namespace invoice_manager.Dtos
 {
-    public enum UserRoles
-    {
-        Admin,
-        User
-    }
-    public class User : IModel
+    public class GetUser
     {
         public int Id { get; set;}
         public string FirstName { get; set;}
         public string LastName { get; set;}
         public string Email { get; set;}
-        public string PasswordHash { get; set;}
         public UserRoles Role { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; } 
-        public ICollection<Invoice> Invoices { get; set; }
     }
 }
